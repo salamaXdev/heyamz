@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/heyamz', // Replace 'heyamz' with your repository name
-  assetPrefix: '/heyamz/', // Replace 'heyamz' with your repository name
+  // basePath: '/heyamz', // Replace 'heyamz' with your repository name
+  // assetPrefix: '/heyamz/', // Replace 'heyamz' with your repository name
   trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
