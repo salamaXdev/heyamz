@@ -1,125 +1,540 @@
-// app/page.tsx
 'use client';
 
-import { useState } from 'react';
-import { OfferModal } from '@/components/OfferModal';
-import { Feature } from '@/components/Feature';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+
+import Lottie from 'lottie-react';
+import splashAnimation from '../../public/Splash water.json';
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
+
+  const facts = [
+    {
+      text: "Même une eau de <span className='text-blue-600 italic'>bonne qualité</span> peut se dégrader rapidement si elle n’est pas protégée.",
+      highlight: "bonne qualité"
+    },
+    {
+      text: "Le bassin du Loukkos couvre une superficie de <span className='text-blue-600 italic'>3 730 km²</span> et constitue une réserve vitale.",
+      highlight: "3 730 km²"
+    },
+    {
+      text: "La protection des nappes phréatiques est <span className='text-blue-600 italic'>essentielle</span> car une pollution peut durer des décennies.",
+      highlight: "essentielle"
+    }
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    // Auto-advance facts slider
+    const factInterval = setInterval(() => {
+      setCurrentFactIndex((prev) => (prev + 1) % facts.length);
+    }, 5000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(factInterval);
+    };
+  }, [facts.length]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-8 relative overflow-hidden">
-      {/* Animated background elements - adjusted for mobile */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-[#FF9900]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-[#ffd814]/10 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen">
+      {/* Navigation Header aligned with content width */}
+      <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled
+        ? 'bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm py-3'
+        : 'bg-transparent py-6'
+        }`}>
+        <nav className="container mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-3 group cursor-pointer">
+            <div className="relative w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105 duration-300">
+              <Image
+                src="/water-logo.png"
+                alt="Loukkos Eau Logo"
+                width={48}
+                height={48}
+                className="object-contain"
+              />
+            </div>
+            <span className="text-xl font-black font-display text-gray-900 tracking-tight">Loukkos<span className="text-blue-600">Eau</span></span>
+          </div>
 
-      <div className="max-w-5xl w-full text-center relative">
-        {/* Domain name with responsive sizing */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative mb-8 sm:mb-16 group"
-        >
-          <div className="relative inline-block p-4 sm:p-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#FF9900] to-[#ffd814] rounded-3xl opacity-20 blur-2xl 
-                 group-hover:opacity-30 transition-opacity duration-300">
+          {/* Centered Links */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {[
+              { label: 'Accueil', href: '#accueil' },
+              { label: 'Qualité', href: '#qualite' },
+              { label: 'Surface', href: '#surface' },
+              { label: 'Souterraines', href: '#souterraines' },
+              { label: 'Agir', href: '#actions' },
+            ].map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="px-5 py-2 text-sm font-bold text-gray-600 hover:text-blue-600 rounded-full transition-all hover:bg-blue-50/50 font-display"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Action Button */}
+          <div className="flex items-center space-x-4">
+            <a href="#actions" className="hidden sm:flex px-6 py-2.5 bg-gray-900 text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all shadow-lg hover:shadow-blue-200 active:scale-95 font-display">
+              Contribuer
+            </a>
+            {/* Mobile Menu Toggle */}
+            <button className="lg:hidden w-10 h-10 flex items-center justify-center text-gray-900">
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* 1. Creative Hero Section */}
+      <section id="accueil" className="relative min-h-[95vh] flex items-center overflow-hidden bg-white">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50/50 -skew-x-12 translate-x-1/4 z-0"></div>
+
+        {/* Animated Water Blobs (CSS based) - Kept subtle for depth */}
+        <div className="absolute top-[20%] right-[10%] w-72 h-72 bg-blue-400/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob z-0"></div>
+        <div className="absolute top-[30%] right-[20%] w-72 h-72 bg-green-400/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000 z-0"></div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <div className="lg:w-3/5 text-left">
+              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full text-blue-600 font-bold text-xs uppercase tracking-widest mb-8 animate-fade-in">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                <span>Initiative de Préservation 2025</span>
+              </div>
+
+              <h1 className="text-6xl md:text-8xl font-black font-display leading-[1.1] mb-8 text-gray-900 animate-fade-in">
+                L'eau est <span className="title-gradient">Vraie</span> <br />
+                Au Loukkos.
+              </h1>
+
+              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-xl leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                « Une eau de bonne qualité aujourd’hui dépend des gestes responsables d’aujourd’hui. »
+                <span className="block mt-4 text-sm font-bold text-gray-400 uppercase tracking-tighter">Engagement • Sensibilisation • Avenir</span>
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <a href="#qualite" className="btn-primary flex items-center group">
+                  <span>Agir maintenant</span>
+                  <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#surface" className="flex items-center space-x-3 text-gray-500 hover:text-blue-600 font-bold transition-colors group">
+                  <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-blue-200 transition-colors">
+                    <i className="fas fa-play text-xs ml-1"></i>
+                  </div>
+                  <span>Voir les données</span>
+                </a>
+              </div>
             </div>
 
-            <h1 className="domain-name relative text-5xl sm:text-7xl md:text-8xl font-black tracking-tight py-4 sm:py-6 px-4 sm:px-8
-                 bg-gradient-to-r from-[#FF9900] to-[#ffd814] bg-clip-text text-transparent
-                 transition-all duration-300 group-hover:scale-[1.02]">
-              heyamz.com
-            </h1>
+            <div className="lg:w-2/5 relative animate-fade-in flex justify-center items-center" style={{ animationDelay: '0.6s' }}>
+              <div className="relative w-full max-w-[600px] aspect-square flex items-center justify-center">
+                {/* Liquid Filling Animation inside the White Circle */}
+                <div className="absolute w-[55%] h-[55%] rounded-full shadow-[0_20px_60px_rgba(0,0,0,0.1)] z-0 overflow-hidden bg-white border-4 border-white">
+                  <div className="liquid-wave-container relative w-full h-full">
+                    <div className="liquid-wave-element"></div>
+                    <div className="liquid-wave-element"></div>
+                    <div className="liquid-wave-element"></div>
+                    {/* Subtle Shine/Reflect effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
+                  </div>
+                </div>
+
+                {/* Lottie Water Splash Animation */}
+                <div className="absolute inset-0 z-10 transition-transform hover:scale-105 duration-700">
+                  <Lottie animationData={splashAnimation} loop={true} className="w-full h-full" />
+                </div>
+
+                {/* Floating Stats */}
+                <div className="absolute top-[15%] right-[5%] bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-sm border border-gray-50/50 animate-float z-30">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-water text-xs"></i>
+                    </div>
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Pureté</span>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-[15%] left-[5%] bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-sm border border-gray-50/50 animate-float animation-delay-2000 z-30">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-green-50 text-green-500 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-seedling text-xs"></i>
+                    </div>
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Équilibre</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Tagline with responsive font size */}
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-2xl sm:text-3xl font-light mb-8 sm:mb-16 text-white/90 max-w-2xl mx-auto leading-relaxed px-4"
-        >
-          Your Gateway to E-commerce Excellence
-        </motion.h2>
-
-        {/* CTA Button with adjusted padding for mobile */}
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          onClick={() => setIsModalOpen(true)}
-          className="cta-gradient text-black font-semibold px-8 sm:px-16 py-4 sm:py-5 rounded-full 
-                   uppercase tracking-wide text-lg sm:text-xl hover:shadow-[0_8px_30px_rgb(255,153,0,0.3)] 
-                   hover:-translate-y-0.5 transition-all transform hover:scale-105
-                   border border-[#FF9900]/20 w-full sm:w-auto max-w-xs mx-auto"
-        >
-          Make an Offer
-        </motion.button>
-
-        {/* Features section with responsive padding */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="my-12 sm:my-24 p-6 sm:p-12 bg-white/[0.03] backdrop-blur-xl rounded-3xl 
-                   border border-[#FF9900]/10 shadow-2xl shadow-[#FF9900]/5
-                   hover:bg-white/[0.05] transition-all duration-500"
-        >
-          <div className="space-y-4">
-            <Feature text="Perfect for E-commerce Related Services" />
-            <Feature text="Ideal for Seller Tools & Solutions" />
-            <Feature text="Great for Marketplace Analytics" />
-            <Feature text="Suitable for Shopping Assistant Services" />
+      {/* 2. Water Quality Overview */}
+      <section id="qualite" className="section-padding bg-white">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6 font-outfit title-gradient">Importance de la Qualité de l'Eau</h2>
+            <p className="text-lg text-gray-700 leading-relaxed italic">
+              « Pourquoi la qualité de l'eau est-elle si cruciale ? Même une eau de bonne qualité peut se détériorer sans protection adéquate. Notre santé, notre agriculture et notre environnement en dépendent directement. »
+            </p>
           </div>
-        </motion.div>
 
-        {/* Use cases section with adjusted spacing */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="bg-gradient-to-r from-[#FF9900]/5 to-[#ffd814]/5 rounded-2xl p-6 sm:p-10 my-8 sm:my-16
-                   border border-[#FF9900]/10 backdrop-blur-sm hover:backdrop-blur-lg
-                   transition-all duration-500"
-        >
-          <p className="text-xl sm:text-2xl font-light">Ideal for businesses focused on:</p>
-          <p className="text-[#ffd814] font-medium mt-4 sm:mt-6 text-lg sm:text-xl tracking-wide">
-            Online Retail Solutions • E-commerce Tools<br className="sm:hidden" /> 
-            Seller Analytics • Shopping Assistants
-          </p>
-        </motion.div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="bg-blue-50 p-10 rounded-3xl border border-blue-100 card-shadow">
+              <h3 className="text-2xl font-bold mb-4 text-blue-800">Un équilibre fragile</h3>
+              <p className="text-gray-700 mb-6">
+                Le bassin du Loukkos est une ressource vitale. Bien que la qualité actuelle soit globalement satisfaisante, elle reste vulnérable aux pollutions domestiques, industrielles et agricoles.
+              </p>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg">
+                  <i className="fas fa-check"></i>
+                </div>
+                <span className="font-semibold text-blue-900 text-lg">Prévenir vaut mieux que traiter.</span>
+              </div>
+            </div>
+            <div className="relative h-[300px] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-green-400"></div>
+              <div className="flex items-center justify-center h-full">
+                <i className="fas fa-hand-holding-water text-white text-8xl opacity-80"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        {/* Contact section with mobile optimization */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="mt-8 sm:mt-16 text-lg sm:text-xl bg-white/[0.03] rounded-2xl p-6 sm:p-8 backdrop-blur-sm mx-4 sm:mx-0"
-        >
-          <p className="font-light">Ready to acquire this premium domain?</p>
-          <p className="mt-3 sm:mt-4">
-            Contact us at:{' '}
-            <a
-              href="mailto:salamadev00@gmail.com"
-              className="text-[#FF9900] hover:text-[#ffd814] transition-colors 
-                       underline decoration-[#FF9900]/30 hover:decoration-[#ffd814]
-                       break-all sm:break-normal"
-            >
-              salamadev00@gmail.com
-            </a>
-          </p>
-        </motion.div>
-      </div>
+      {/* 3. Surface Water Quality */}
+      <section id="surface" className="section-padding bg-white">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="max-w-xl">
+              <span className="text-blue-500 font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Surveillance des Eaux</span>
+              <h2 className="text-5xl font-bold font-outfit text-gray-900 leading-tight">Qualité des eaux de surface</h2>
+            </div>
+            <p className="text-gray-500 max-w-xs text-sm leading-relaxed border-l-2 border-blue-100 pl-6 italic">
+              « État actuel des principaux points de captage et barrages du bassin. »
+            </p>
+          </div>
 
-      <OfferModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-    </main>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-16">
+            {/* Category: Excellente */}
+            <div className="space-y-8 animate-fade-in">
+              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
+                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Excellente</h3>
+              </div>
+              <ul className="space-y-5">
+                {['Smir', 'My Bouchta', 'El Hachef', 'Ibn Batouta', 'Tanger MED', 'Oued El Makhazine', 'de garde'].map((item) => (
+                  <li key={item} className="group flex items-center justify-between">
+                    <span className="text-gray-700 font-medium group-hover:text-blue-600 transition-colors">{item}</span>
+                    <i className="fas fa-check text-[10px] text-blue-500 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0"></i>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Category: Bonne */}
+            <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Bonne</h3>
+              </div>
+              <ul className="space-y-5">
+                {['Nakhla', 'My Hassan Ben Mehdi'].map((item) => (
+                  <li key={item} className="group flex items-center justify-between">
+                    <span className="text-gray-700 font-medium group-hover:text-green-600 transition-colors">{item}</span>
+                    <i className="fas fa-check text-[10px] text-green-500 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0"></i>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Category: Mauvaise */}
+            <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
+                <div className="w-2 h-2 rounded-full bg-red-400"></div>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Mauvaise</h3>
+              </div>
+              <ul className="space-y-5">
+                {['A. Khattabi'].map((item) => (
+                  <li key={item} className="group flex items-center justify-between">
+                    <span className="text-gray-700 font-medium group-hover:text-red-500 transition-colors">{item}</span>
+                    <i className="fas fa-exclamation text-[10px] text-red-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all"></i>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-24 pt-10 border-t border-gray-50 flex items-center justify-center space-x-8 text-xs font-bold text-gray-300 uppercase tracking-[0.3em]">
+            <span>Données Loukkos 2025</span>
+            <span className="w-1 h-1 bg-gray-200 rounded-full"></span>
+            <span>Rapport Qualité G4</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Groundwater Quality */}
+      <section id="souterraines" className="section-padding bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-outfit title-gradient">Qualité des eaux souterraines</h2>
+            <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+              Les nappes phréatiques du bassin du Loukkos sont des réserves invisibles mais essentielles.
+              Découvrez l'état de qualité des principales nappes de notre région.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { name: 'Charf El Akab', quality: 'Bonne à Moyenne', level: 75 },
+              { name: 'Azla', quality: 'Bonne à Moyenne', level: 70 },
+              { name: 'Emsa', quality: 'Bonne à Moyenne', level: 72 },
+              { name: 'Fnidek', quality: 'Bonne à Moyenne', level: 68 },
+              { name: 'Negro', quality: 'Bonne à Moyenne', level: 70 },
+              { name: 'Rmel de Larache', quality: 'Bonne à Moyenne', level: 65 },
+            ].map((nappe, idx) => (
+              <div key={idx} className="bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 rounded-[32px] border border-gray-100 card-shadow relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500"></div>
+
+                <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                  <i className="fas fa-layer-group text-blue-500 mr-3"></i>
+                  {nappe.name}
+                </h4>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-end">
+                    <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Qualité Globale</span>
+                    <span className="text-green-600 font-bold">{nappe.quality}</span>
+                  </div>
+
+                  {/* Visual Quality Bar */}
+                  <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full"
+                      style={{ width: `${nappe.level}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex items-center text-sm text-gray-500 italic">
+                  <i className="fas fa-info-circle mr-2 opacity-50"></i>
+                  Surveillance continue requise
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 max-w-3xl mx-auto p-8 bg-blue-900 rounded-[32px] text-white text-center shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/water.png')] opacity-10"></div>
+            <p className="text-xl font-medium relative z-10 leading-relaxed">
+              « La qualité des eaux souterraines reste globalement acceptable mais nécessite une protection continue pour les générations futures. »
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Did You Know? - Redesigned for Full Width & No Shadow */}
+      <section className="section-padding bg-white overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="relative">
+            {/* Background decorative elements */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-50 rounded-full blur-3xl opacity-70 animate-pulse"></div>
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-green-50 rounded-full blur-3xl opacity-70 animate-pulse animation-delay-2000"></div>
+
+            <div className="relative z-10 bg-gradient-to-br from-blue-50/50 to-white p-12 md:p-20 rounded-[40px] border border-blue-100/50 text-center group transition-all duration-500 min-h-[400px] flex flex-col justify-center w-full">
+              <div className="mb-10 inline-flex items-center justify-center w-24 h-24 bg-white rounded-[30px] shadow-sm transform group-hover:rotate-12 transition-transform duration-500 mx-auto">
+                <i className="fas fa-lightbulb text-4xl text-amber-400 animate-pulse"></i>
+              </div>
+
+              <h2 className="text-sm font-black uppercase tracking-[0.3em] text-blue-600 mb-6 font-display">Le saviez-vous ?</h2>
+
+              <div className="relative h-44 md:h-24">
+                {facts.map((fact, idx) => (
+                  <blockquote
+                    key={idx}
+                    className={`absolute inset-0 text-xl md:text-3xl font-display font-medium text-gray-900 leading-tight max-w-3xl mx-auto left-0 right-0 transition-all duration-1000 transform ${idx === currentFactIndex ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                      }`}
+                    dangerouslySetInnerHTML={{ __html: `« ${fact.text} »` }}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-16 flex items-center justify-center space-x-3">
+                {facts.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentFactIndex(idx)}
+                    className={`h-2 rounded-full transition-all duration-500 ${idx === currentFactIndex ? 'w-12 bg-blue-600' : 'w-2 bg-blue-200'
+                      }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Why Protect Water Quality? */}
+      <section className="section-padding bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-outfit">Pourquoi protéger la qualité de l’eau ?</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              { icon: 'fa-heartbeat', title: 'Santé humaine', color: 'text-red-500', bg: 'bg-red-50', text: 'Une eau propre est le premier médicament contre les maladies hydriques.' },
+              { icon: 'fa-seedling', title: 'Agriculture et sécurité alimentaire', color: 'text-green-500', bg: 'bg-green-50', text: 'Des sols fertiles et des cultures saines dépendent d\'une eau sans polluants.' },
+              { icon: 'fa-globe-africa', title: 'Protection de l’environnement', color: 'text-blue-500', bg: 'bg-blue-50', text: 'Préserver l\'écosystème du Loukkos pour maintenir la biodiversité locale.' },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white p-10 rounded-3xl card-shadow border border-gray-100 text-center">
+                <div className={`w-20 h-20 ${item.bg} ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-8 text-3xl shadow-sm`}>
+                  <i className={`fas ${item.icon}`}></i>
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-gray-600">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. What Can Citizens Do? */}
+      <section id="actions" className="section-padding bg-white">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center gap-16">
+            <div className="md:w-1/2">
+              <div className="relative">
+                <div className="absolute -top-10 -left-10 w-40 h-40 bg-blue-100 rounded-full filter blur-3xl opacity-50"></div>
+                <h2 className="text-4xl font-bold mb-10 font-outfit relative z-10">Que peuvent faire les citoyens ?</h2>
+              </div>
+              <ul className="space-y-6">
+                {[
+                  { icon: 'fa-trash-alt', text: 'Ne pas jeter de déchets dans les oueds ou les puits' },
+                  { icon: 'fa-tint', text: 'Utiliser l’eau de manière responsable' },
+                  { icon: 'fa-filter', text: 'Réduire les sources de pollution' },
+                  { icon: 'fa-users', text: 'Sensibiliser son entourage' },
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center space-x-5 group">
+                    <div className="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                      <i className={`fas ${item.icon}`}></i>
+                    </div>
+                    <span className="text-xl text-gray-700 font-medium">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="md:w-1/2 bg-blue-900 rounded-[50px] p-12 text-white relative overflow-hidden card-shadow">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-800 rounded-full -mr-32 -mt-32"></div>
+              <h3 className="text-3xl font-bold mb-8 relative z-10 font-display">Notre Message</h3>
+              <p className="text-xl font-light leading-relaxed relative z-10">
+                Notre objectif est de sensibiliser à la protection de la qualité de l’eau afin de préserver cette ressource essentielle pour les générations futures.
+              </p>
+              <div className="mt-10 pt-10 border-t border-white/20 flex items-center space-x-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <i className="fas fa-quote-left text-blue-200"></i>
+                </div>
+                <span className="text-blue-200 italic font-medium">L'engagement de tous pour l'eau de demain.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Interactive Map */}
+      <section className="section-padding bg-gray-50 overflow-hidden" >
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl font-black mb-6 font-display">Bassin du Loukkos</h2>
+          <p className="text-gray-600 mb-12 max-w-2xl mx-auto font-medium">Localisation géographique pour contexte</p>
+          <div className="max-w-5xl mx-auto rounded-[40px] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.08)] bg-white p-3 border border-white">
+            <div className="relative h-[600px] w-full bg-blue-50 rounded-[32px] overflow-hidden group">
+              {/* Google Maps Embed */}
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3270560.717078659!2d-7.529000677343745!3d36.820749592801896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0a4de766a9be43%3A0x6744b97cdf0c14b6!2sOued%20Loukos!5e0!3m2!1sen!2sma!4v1766850507865!5m2!1sen!2sma"
+                className="absolute inset-0 w-full h-full grayscale-[20%] hover:grayscale-0 transition-all duration-700 active:scale-[1.02]"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+
+              {/* Hover Indicator */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-white/50 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 flex items-center space-x-3">
+                <i className="fas fa-mouse-pointer text-blue-600 text-xs"></i>
+                <span className="text-xs font-bold text-gray-900 uppercase tracking-widest">Explorer la carte</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section >
+
+      {/* 10. Footer */}
+      <footer className="bg-white border-t border-gray-100 pt-20 pb-10" >
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-12 mb-16">
+            <div>
+              <div className="flex items-center space-x-3 mb-6">
+                <Image
+                  src="/water-logo.png"
+                  alt="Loukkos Eau Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+                <span className="text-xl font-bold font-display text-gray-900">Loukkos<span className="text-blue-600">Eau</span></span>
+              </div>
+              <p className="text-gray-500 leading-relaxed">
+                Une initiative pédagogique pour la sensibilisation à la gestion intégrée des ressources en eau dans le bassin du Loukkos.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-6">Navigation</h4>
+              <ul className="space-y-4">
+                <li><a href="#accueil" className="text-gray-600 hover:text-blue-600 transition-colors">Accueil</a></li>
+                <li><a href="#qualite" className="text-gray-600 hover:text-blue-600 transition-colors">Qualité de l’eau</a></li>
+                <li><a href="#surface" className="text-gray-600 hover:text-blue-600 transition-colors">Eaux de surface</a></li>
+                <li><a href="#actions" className="text-gray-600 hover:text-blue-600 transition-colors">Actions Citoyennes</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-6">Informations</h4>
+              <ul className="space-y-4 text-gray-600">
+                <li className="flex items-center space-x-3">
+                  <i className="fas fa-users-cog text-blue-600"></i>
+                  <span>Réalisé par : Groupe G4</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <i className="fas fa-calendar-alt text-blue-600"></i>
+                  <span>Année universitaire : 2024 - 2025</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <i className="fas fa-book-open text-blue-600"></i>
+                  <span>Module : Gestion intégrée des ressources en eau</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+            <p>© 2025 Loukkos Eau. Tous droits réservés.</p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <span className="hover:text-blue-600 cursor-pointer">Confidentialité</span>
+              <span className="hover:text-blue-600 cursor-pointer">Mentions Légales</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div >
   );
 }

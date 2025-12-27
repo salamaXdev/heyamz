@@ -1,21 +1,21 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next'
-import { Inter, Montserrat } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
-// Load Inter for body text
-const inter = Inter({ subsets: ['latin'] })
-
-// Load Montserrat for the domain name
-const montserrat = Montserrat({ 
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['700'], // Load only the black weight for performance
-  variable: '--font-montserrat',
+  variable: '--font-inter',
+})
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta',
 })
 
 export const metadata: Metadata = {
-  title: 'heyamz.com - Premium Domain For Sale',
-  description: 'Premium e-commerce related domain for sale',
+  title: 'Qualité de l’eau dans le bassin du Loukkos',
+  description: 'Sensibilisation à la préservation de la qualité de l’eau dans le bassin du Loukkos, Maroc.',
 }
 
 export default function RootLayout({
@@ -24,14 +24,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${montserrat.variable}`}>
+    <html lang="fr" className={`${plusJakarta.variable} ${inter.variable} scroll-smooth`}>
       <head>
-        <link 
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           rel="stylesheet"
         />
+        {/* Modern & Clean: Outfit for headings */}
+        <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className="font-sans antialiased text-gray-900 bg-gray-50">
+        {children}
+      </body>
     </html>
   )
 }
