@@ -108,21 +108,15 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-3/5 text-left">
-              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full text-blue-600 font-bold text-xs uppercase tracking-widest mb-8 animate-fade-in">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <span>Initiative de Préservation 2025</span>
-              </div>
 
-              <h1 className="text-6xl md:text-8xl font-black font-display leading-[1.1] mb-8 text-gray-900 animate-fade-in">
-                L'eau est <span className="title-gradient">Vraie</span> <br />
-                Au Loukkos.
+
+              <h1 className="text-5xl md:text-7xl font-black font-display leading-[1.1] mb-8 text-gray-900 animate-fade-in">
+                Le Loukkos, <br />
+                <span className="title-gradient">une richesse à protéger</span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-xl leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                « Une eau de bonne qualité aujourd’hui dépend des gestes responsables d’aujourd’hui. »
+              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                « La qualité de l’eau dépend aujourd’hui de nos gestes pour préserver demain. »
                 <span className="block mt-4 text-sm font-bold text-gray-400 uppercase tracking-tighter">Engagement • Sensibilisation • Avenir</span>
               </p>
 
@@ -135,7 +129,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-blue-200 transition-colors">
                     <i className="fas fa-play text-xs ml-1"></i>
                   </div>
-                  <span>Voir les données</span>
+                  <span>En savoir plus</span>
                 </a>
               </div>
             </div>
@@ -164,7 +158,7 @@ export default function Home() {
                     <div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center">
                       <i className="fas fa-water text-xs"></i>
                     </div>
-                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Pureté</span>
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Qualité</span>
                   </div>
                 </div>
 
@@ -173,7 +167,7 @@ export default function Home() {
                     <div className="w-8 h-8 bg-green-50 text-green-500 rounded-lg flex items-center justify-center">
                       <i className="fas fa-seedling text-xs"></i>
                     </div>
-                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Équilibre</span>
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Écosystème</span>
                   </div>
                 </div>
               </div>
@@ -513,11 +507,11 @@ export default function Home() {
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center space-x-3">
                   <i className="fas fa-users-cog text-blue-600"></i>
-                  <span>Réalisé par : Groupe G4</span>
+                  <span>Réalisé par : Meryem Nassouh</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <i className="fas fa-calendar-alt text-blue-600"></i>
-                  <span>Année universitaire : 2024 - 2025</span>
+                  <span>Année universitaire : 2025 - 2026</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <i className="fas fa-book-open text-blue-600"></i>
