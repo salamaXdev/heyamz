@@ -5,10 +5,34 @@ import Image from 'next/image';
 
 import Lottie from 'lottie-react';
 import splashAnimation from '../../public/Splash water.json';
+import confetti from 'canvas-confetti';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
+  const [isEngaged, setIsEngaged] = useState(false);
+
+  // Persistence for engagement state
+  useEffect(() => {
+    const saved = localStorage.getItem('water_engagement');
+    if (saved === 'true') {
+      setIsEngaged(true);
+    }
+  }, []);
+
+  const handleEngage = () => {
+    setIsEngaged(true);
+    localStorage.setItem('water_engagement', 'true');
+
+    // Trigger celebration
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#2563eb', '#10b981', '#ffffff']
+    });
+  };
 
   const facts = [
     {
@@ -220,104 +244,157 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="surface" className="section-padding bg-gray-50/50">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-16 items-start">
-            <div className="lg:w-1/3">
-              <span className="text-blue-600 font-bold uppercase tracking-[0.2em] text-[10px] mb-4 block">Indicateur de Performance</span>
-              <h2 className="text-3xl font-bold font-display text-gray-900 leading-tight mb-6 uppercase tracking-tight">État des eaux <br />de surface</h2>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                Analyse comparative de la qualité hydrique basée sur les relevés des 10 principales stations de surveillance du bassin du Loukkos.
-              </p>
+      <section id="surface" className="section-padding bg-[#fafbfc] relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.03]">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
 
-              <div className="space-y-6">
-                <div className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                  <div className="flex justify-between items-end">
-                    <div>
-                      <p className="text-xs text-gray-400 font-bold uppercase mb-1">Indice Global</p>
-                      <p className="text-2xl font-black text-gray-900 font-outfit">Positif</p>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-20 items-stretch">
+            {/* Left Column: Context & Summary */}
+            <div className="lg:w-[35%] flex flex-col justify-between">
+              <div>
+                <div className="flex items-center space-x-2 mb-6">
+                  <div className="w-8 h-[2px] bg-blue-600"></div>
+                  <span className="text-blue-600 font-bold uppercase tracking-[0.2em] text-[10px]">Indicateur de Performance</span>
+                </div>
+
+                <h2 className="text-4xl md:text-5xl font-black font-display text-gray-900 leading-[1.1] mb-8 uppercase tracking-tight">
+                  État des eaux <br />
+                  <span className="title-gradient">de surface</span>
+                </h2>
+
+                <p className="text-gray-500 text-base leading-relaxed mb-10 max-w-sm">
+                  Une analyse rigoureuse basée sur les données collectées par nos <span className="font-bold text-gray-700">10 stations stratégiques</span>, offrant une vision à 360° du bassin du Loukkos.
+                </p>
+
+                <div className="space-y-4 mb-10">
+                  <div className="group p-5 bg-white rounded-[24px] border border-gray-100 shadow-sm hover:border-blue-100 hover:shadow-md transition-all duration-300">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+                        <i className="fas fa-chart-line text-sm"></i>
+                      </div>
+                      <span className="text-[10px] bg-green-100 text-green-600 px-2 py-1 rounded-full font-bold">+12% vs 2024</span>
                     </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-green-500 font-bold">+12% vs 2024</p>
+                    <div>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Indice Global de Santé</p>
+                      <p className="text-2xl font-black text-gray-900 font-outfit">Positif & Stable</p>
                     </div>
                   </div>
-                </div>
-                <div className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                  <div className="flex justify-between items-end">
-                    <div>
-                      <p className="text-xs text-gray-400 font-bold uppercase mb-1">Stations Actives</p>
-                      <p className="text-2xl font-black text-gray-900 font-outfit">10/10</p>
+
+                  <div className="group p-5 bg-white rounded-[24px] border border-gray-100 shadow-sm hover:border-blue-100 hover:shadow-md transition-all duration-300">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                        <i className="fas fa-satellite-dish text-sm"></i>
+                      </div>
+                      <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-1 rounded-full font-bold">Live</span>
                     </div>
-                    <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
-                      <i className="fas fa-satellite-dish text-sm"></i>
+                    <div>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Couverture du Réseau</p>
+                      <p className="text-2xl font-black text-gray-900 font-outfit">10/10 Stations</p>
                     </div>
                   </div>
                 </div>
               </div>
+
+
             </div>
 
-            <div className="lg:w-2/3 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Right Column: Detailed Status Cards */}
+            <div className="lg:w-[65%] w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
                 {[
                   {
-                    label: 'Excellente',
+                    label: 'Qualité Excellente',
                     value: 70,
                     count: '07',
-                    bg: 'bg-blue-600',
-                    stations: 'Smir, My Bouchta, El Hachef, Ibn Batouta, Oued El Makhazine, Tanger MED'
+                    className: 'text-blue-600',
+                    bgClass: 'bg-blue-600',
+                    lightBg: 'bg-blue-50',
+                    borderClass: 'hover:border-blue-100',
+                    stations: ['Smir', 'My Bouchta', 'El Hachef', 'Ibn Batouta', 'Oued El Makhazine', 'Tanger MED'],
+                    desc: 'Conditions optimales, aucune restriction d\'usage.',
+                    icon: 'fa-check-circle'
                   },
                   {
-                    label: 'Bonne Qualité',
+                    label: 'Qualité Bonne',
                     value: 20,
                     count: '02',
-                    bg: 'bg-gray-400',
-                    stations: 'Nakhla, My Hassan Ben Mehdi'
+                    className: 'text-teal-600',
+                    bgClass: 'bg-teal-600',
+                    lightBg: 'bg-teal-50',
+                    borderClass: 'hover:border-teal-100',
+                    stations: ['Nakhla', 'My Hassan Ben Mehdi'],
+                    desc: 'Qualité satisfaisante avec surveillance périodique.',
+                    icon: 'fa-adjust'
                   },
                   {
                     label: 'Zone Critique',
                     value: 10,
                     count: '01',
-                    bg: 'bg-red-400',
-                    stations: 'A. Khattabi'
+                    className: 'text-rose-600',
+                    bgClass: 'bg-rose-600',
+                    lightBg: 'bg-rose-50',
+                    borderClass: 'hover:border-rose-100',
+                    stations: ['A. Khattabi'],
+                    desc: 'Mesures corrective requises, usage contrôlé.',
+                    icon: 'fa-exclamation-triangle'
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full group/card">
-                    <div>
-                      <div className="flex justify-between items-start mb-6">
-                        <div className={`px-2 py-0.5 rounded ${item.bg} text-white font-black text-[9px] uppercase`}>
-                          {item.value}%
-                        </div>
-                        <span className="text-xl font-black text-gray-900/10 font-cairo tracking-tighter group-hover/card:text-gray-900/20 transition-colors uppercase">{item.count}</span>
-                      </div>
-
-                      <h4 className={`text-[11px] font-black uppercase tracking-widest mb-3 ${idx === 2 ? 'text-red-500' : 'text-gray-400'}`}>
-                        {item.label}
-                      </h4>
-
-                      <p className="text-[11px] text-gray-400 leading-relaxed line-clamp-2 italic">
-                        {item.stations}
-                      </p>
+                  <div key={idx} className={`bg-white rounded-[32px] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col group ${item.borderClass}`}>
+                    {/* Card Header with Progress Top Bar */}
+                    <div className="h-1.5 w-full bg-gray-50 overflow-hidden">
+                      <div className={`h-full ${item.bgClass} transition-all duration-1000 delay-300`} style={{ width: `${item.value}%` }}></div>
                     </div>
 
-                    <div className="mt-6">
-                      <div className="h-1 w-full bg-gray-50 rounded-full overflow-hidden">
-                        <div className={`h-full ${item.bg} rounded-full`} style={{ width: `${item.value}%` }}></div>
+                    <div className="p-8 flex-grow flex flex-col justify-between">
+                      <div>
+                        <div className="flex justify-between items-center mb-8">
+                          <div className={`w-12 h-12 rounded-2xl ${item.lightBg} ${item.className} flex items-center justify-center text-xl transition-transform group-hover:rotate-12`}>
+                            <i className={`fas ${item.icon}`}></i>
+                          </div>
+                          <span className="text-4xl font-black text-gray-100 font-outfit leading-none">{item.count}</span>
+                        </div>
+
+                        <h4 className={`text-base font-black mb-2 font-display uppercase tracking-tight text-gray-900`}>
+                          {item.label}
+                        </h4>
+
+                        <div className={`text-[12px] font-bold ${item.className} opacity-80 mb-6 flex items-center`}>
+                          <span className="w-1.5 h-1.5 rounded-full bg-current mr-2 animate-pulse"></span>
+                          {item.value}% du bassin
+                        </div>
+
+                        <div className="mb-8">
+                          <p className="text-sm text-gray-500 leading-relaxed mb-4 min-h-[40px]">
+                            {item.desc}
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {item.stations.map((station, sIdx) => (
+                              <span key={sIdx} className="text-[12px] px-2 py-1 bg-gray-50 text-gray-500 rounded-md font-medium ">
+                                {station}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-6 border-t border-gray-50 text-center">
+                        <span className={`text-[9px] font-black uppercase tracking-widest text-gray-400 group-hover:${item.className} transition-colors`}>
+                          Détails Station
+                        </span>
                       </div>
                     </div>
                   </div>
                 ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest">
-                <div className="flex items-center">
-                  <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span> Requis
-                </div>
-                <div className="flex items-center">
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span> Satisfaisant
-                </div>
-                <div className="flex items-center">
-                  <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span> Risque
-                </div>
               </div>
             </div>
           </div>
@@ -432,16 +509,70 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              { icon: 'fa-heartbeat', title: 'Santé humaine', color: 'text-red-500', bg: 'bg-red-50', text: 'Une eau propre est le premier médicament contre les maladies hydriques.' },
-              { icon: 'fa-seedling', title: 'Agriculture et sécurité alimentaire', color: 'text-green-500', bg: 'bg-green-50', text: 'Des sols fertiles et des cultures saines dépendent d\'une eau sans polluants.' },
-              { icon: 'fa-globe-africa', title: 'Protection de l’environnement', color: 'text-blue-500', bg: 'bg-blue-50', text: 'Préserver l\'écosystème du Loukkos pour maintenir la biodiversité locale.' },
+              {
+                icon: 'fa-heartbeat',
+                title: 'Santé humaine',
+                color: 'text-red-500',
+                bg: 'bg-red-50',
+                image: '/sante.jpeg',
+                text: 'Une eau propre est le premier médicament contre les maladies hydriques.'
+              },
+              {
+                icon: 'fa-seedling',
+                title: 'Agriculture et sécurité alimentaire',
+                color: 'text-green-500',
+                bg: 'bg-green-50',
+                image: '/securite-alimentaire.jpeg',
+                text: 'Des sols fertiles et des cultures saines dépendent d\'une eau sans polluants.'
+              },
+              {
+                icon: 'fa-globe-africa',
+                title: 'Protection de l’environnement',
+                color: 'text-blue-500',
+                bg: 'bg-blue-50',
+                image: '/environnement.jpeg',
+                text: 'Préserver l\'écosystème du Loukkos pour maintenir la biodiversité locale.'
+              },
             ].map((item, idx) => (
-              <div key={idx} className="bg-white p-10 rounded-3xl card-shadow border border-gray-100 text-center">
-                <div className={`w-20 h-20 ${item.bg} ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-8 text-3xl shadow-sm`}>
-                  <i className={`fas ${item.icon}`}></i>
+              <div key={idx} className="bg-white rounded-[32px] card-shadow border border-gray-100 overflow-hidden flex flex-col group">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className={`absolute top-4 right-4 w-12 h-12 ${item.bg} ${item.color} rounded-2xl flex items-center justify-center text-xl shadow-lg backdrop-blur-sm bg-white/80`}>
+                    <i className={`fas ${item.icon}`}></i>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-gray-600">{item.text}</p>
+                <div className="p-8 text-center flex-grow flex flex-col justify-center">
+                  <h3 className="text-xl font-bold mb-4 font-display text-gray-900 leading-tight">{item.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6.5 Image Gallery Highlights */}
+      <section className="pb-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { src: '/pic1.jpeg', alt: 'Aperçu Loukkos 1' },
+              { src: '/pic2.jpeg', alt: 'Aperçu Loukkos 2' },
+              { src: '/pic3.jpeg', alt: 'Aperçu Loukkos 3' },
+            ].map((pic, idx) => (
+              <div key={idx} className="relative h-72 rounded-[32px] overflow-hidden shadow-lg group">
+                <Image
+                  src={pic.src}
+                  alt={pic.alt}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             ))}
           </div>
@@ -473,17 +604,70 @@ export default function Home() {
                 ))}
               </ul>
             </div>
-            <div className="md:w-1/2 bg-blue-900 rounded-[50px] p-12 text-white relative overflow-hidden card-shadow">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-800 rounded-full -mr-32 -mt-32"></div>
-              <h3 className="text-3xl font-bold mb-8 relative z-10 font-display">Notre Message</h3>
-              <p className="text-xl font-light leading-relaxed relative z-10">
+            <div className="md:w-1/2 bg-blue-900 rounded-[40px] p-8 md:p-10 text-white relative overflow-hidden card-shadow">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-800 rounded-full -mr-24 -mt-24 opacity-50"></div>
+              <h3 className="text-2xl font-bold mb-4 relative z-10 font-display">Notre Message</h3>
+              <p className="text-lg font-light leading-relaxed relative z-10 opacity-90">
                 Notre objectif est de sensibiliser à la protection de la qualité de l’eau afin de préserver cette ressource essentielle pour les générations futures.
               </p>
-              <div className="mt-10 pt-10 border-t border-white/20 flex items-center space-x-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <i className="fas fa-quote-left text-blue-200"></i>
+
+              <div className="mt-8 pt-8 border-t border-white/10 relative z-10">
+                <AnimatePresence mode="wait">
+                  {!isEngaged ? (
+                    <motion.div
+                      key="engage-button"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        onClick={handleEngage}
+                        className="w-full py-3.5 px-6 bg-white text-blue-900 rounded-xl font-black text-base transition-all shadow-lg hover:bg-blue-50 relative overflow-hidden group"
+                      >
+                        <span className="relative z-10 uppercase tracking-wider">Je m’engage</span>
+                      </motion.button>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="success-state"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="text-center"
+                    >
+                      <div className="flex items-center justify-center space-x-4">
+                        <div className="w-12 h-12 bg-green-500 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center">
+                          <i className="fas fa-check text-xl text-white"></i>
+                        </div>
+                        <div className="text-left">
+                          <h4 className="text-lg font-black uppercase tracking-tight text-white leading-none mb-1">Engagé !</h4>
+                          <p className="text-blue-200 text-xs opacity-80">Merci pour votre contribution.</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div className="mt-6 text-center">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+
+                    <p className="text-base text-blue-100/90 leading-relaxed font-medium italic">
+                      « Ensemble, protégeons l’eau du Loukkos. »
+                    </p>
+                  </motion.div>
                 </div>
-                <span className="text-blue-200 italic font-medium">L'engagement de tous pour l'eau de demain.</span>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center space-x-4 relative z-10">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                  <i className="fas fa-quote-left text-xs text-blue-200"></i>
+                </div>
+                <span className="text-blue-200 text-sm italic font-medium">L'engagement de tous pour demain.</span>
               </div>
             </div>
           </div>
