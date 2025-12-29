@@ -556,28 +556,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6.5 Image Gallery Highlights */}
-      <section className="pb-24 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { src: '/pic1.jpeg', alt: 'Aperçu Loukkos 1' },
-              { src: '/pic2.jpeg', alt: 'Aperçu Loukkos 2' },
-              { src: '/pic3.jpeg', alt: 'Aperçu Loukkos 3' },
-            ].map((pic, idx) => (
-              <div key={idx} className="relative h-72 rounded-[32px] overflow-hidden shadow-lg group">
-                <Image
-                  src={pic.src}
-                  alt={pic.alt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 7. What Can Citizens Do? */}
       <section id="actions" className="section-padding bg-white">

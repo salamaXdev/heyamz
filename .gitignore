@@ -33,3 +33,5 @@ next-env.d.ts
 
 # old html file
 old.html
+temp_auto_push.bat
+temp_interactive_push.bat
