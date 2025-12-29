@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next'
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter, Cairo } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -8,9 +8,10 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const plusJakarta = Plus_Jakarta_Sans({
+const cairo = Cairo({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+  variable: '--font-cairo',
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${plusJakarta.variable} ${inter.variable} scroll-smooth`}>
+    <html lang="fr" className={`${cairo.variable} ${inter.variable} scroll-smooth`}>
       <head>
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"

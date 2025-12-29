@@ -14,14 +14,14 @@
   --green-soft: #d8f3dc;
   --green-vibrant: #40916c;
   --font-inter: 'Inter';
-  --font-display: 'Bricolage Grotesque';
-  --font-plus-jakarta: 'Plus Jakarta Sans';
+  --font-display: 'Cairo';
+  --font-cairo: 'Cairo';
 }
 
 body {
   color: var(--text);
   background-color: var(--background);
-  font-family: var(--font-plus-jakarta), sans-serif;
+  font-family: var(--font-cairo), 'Cairo', sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -29,8 +29,9 @@ h1,
 h2,
 h3,
 h4,
-.font-display {
-  font-family: 'Outfit', sans-serif;
+.font-display,
+.font-outfit {
+  font-family: var(--font-cairo), sans-serif;
   letter-spacing: -0.02em;
   font-weight: 700;
 }
@@ -205,7 +206,11 @@ h4,
   color: white;
   padding: 12px 24px;
   border-radius: 50px;
-  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
   transition: all 0.3s ease;
 }
 

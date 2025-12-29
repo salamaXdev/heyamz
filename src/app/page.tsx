@@ -12,16 +12,16 @@ export default function Home() {
 
   const facts = [
     {
-      text: "Même une eau de <span className='text-blue-600 italic'>bonne qualité</span> peut se dégrader rapidement si elle n’est pas protégée.",
-      highlight: "bonne qualité"
+      text: "Ne pas jeter les <span className='text-blue-600 italic'>plastiques, huiles</span> ou déchets dans les oueds.",
+      highlight: "plastiques, huiles"
     },
     {
-      text: "Le bassin du Loukkos couvre une superficie de <span className='text-blue-600 italic'>3 730 km²</span> et constitue une réserve vitale.",
-      highlight: "3 730 km²"
+      text: "Utiliser les <span className='text-blue-600 italic'>poubelles</span> et points de collecte.",
+      highlight: "poubelles"
     },
     {
-      text: "La protection des nappes phréatiques est <span className='text-blue-600 italic'>essentielle</span> car une pollution peut durer des décennies.",
-      highlight: "essentielle"
+      text: "Les déchets finissent souvent dans l’eau et <span className='text-blue-600 italic'>polluent</span> les cours d’eau.",
+      highlight: "polluent"
     }
   ];
 
@@ -110,7 +110,7 @@ export default function Home() {
             <div className="lg:w-3/5 text-left">
 
 
-              <h1 className="text-5xl md:text-7xl font-black font-display leading-[1.1] mb-8 text-gray-900 animate-fade-in">
+              <h1 className="text-4xl md:text-6xl font-black font-display leading-[1.1] mb-8 text-gray-900 animate-fade-in">
                 Le Loukkos, <br />
                 <span className="title-gradient">une richesse à protéger</span>
               </h1>
@@ -121,11 +121,11 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                <a href="#qualite" className="btn-primary flex items-center group">
+                <a href="#qualite" className="btn-primary flex items-center group font-display font-bold">
                   <span>Agir maintenant</span>
                   <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="#surface" className="flex items-center space-x-3 text-gray-500 hover:text-blue-600 font-bold transition-colors group">
+                <a href="#surface" className="flex items-center space-x-3 text-gray-500 hover:text-blue-600 font-bold font-display transition-colors group">
                   <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-blue-200 transition-colors">
                     <i className="fas fa-play text-xs ml-1"></i>
                   </div>
@@ -180,102 +180,146 @@ export default function Home() {
       <section id="qualite" className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 font-outfit title-gradient">Importance de la Qualité de l'Eau</h2>
-            <p className="text-lg text-gray-700 leading-relaxed italic">
-              « Pourquoi la qualité de l'eau est-elle si cruciale ? Même une eau de bonne qualité peut se détériorer sans protection adéquate. Notre santé, notre agriculture et notre environnement en dépendent directement. »
+            <h2 className="text-3xl font-bold mb-6 font-display title-gradient uppercase tracking-tight">Importance de la Qualité de l'Eau</h2>
+            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+              La préservation de la qualité de l'eau est cruciale car la ressource peut se détériorer sans protection adéquate. La santé publique, l'agriculture et l'équilibre environnemental en dépendent directement.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="bg-blue-50 p-10 rounded-3xl border border-blue-100 card-shadow">
-              <h3 className="text-2xl font-bold mb-4 text-blue-800">Un équilibre fragile</h3>
-              <p className="text-gray-700 mb-6">
+            <div className="max-w-xl">
+              <h3 className="text-[32px] font-black mb-6 text-gray-900 font-outfit tracking-tight">Un équilibre fragile</h3>
+              <p className="text-[19px] text-gray-600 mb-10 leading-relaxed">
                 Le bassin du Loukkos est une ressource vitale. Bien que la qualité actuelle soit globalement satisfaisante, elle reste vulnérable aux pollutions domestiques, industrielles et agricoles.
               </p>
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg">
-                  <i className="fas fa-check"></i>
+              <div className="flex items-center space-x-6">
+                <div className="w-16 h-16 flex-shrink-0 bg-blue-50/80 text-blue-600 rounded-[24px] flex items-center justify-center">
+                  <i className="fas fa-shield-alt text-2xl"></i>
                 </div>
-                <span className="font-semibold text-blue-900 text-lg">Prévenir vaut mieux que traiter.</span>
+                <div className="font-outfit">
+                  <p className="text-gray-900 text-xl leading-tight">
+                    Prévenir vaut mieux
+                  </p>
+                  <p className="text-blue-600 text-xl leading-tight">
+                    que traiter.
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="relative h-[300px] rounded-3xl overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-green-400"></div>
-              <div className="flex items-center justify-center h-full">
-                <i className="fas fa-hand-holding-water text-white text-8xl opacity-80"></i>
-              </div>
+            <div className="relative h-[450px] rounded-3xl overflow-hidden shadow-2xl group">
+              <Image
+                src="/loukous.jpeg"
+                alt="Paysage du bassin du Loukkos"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              {/* Overlay for better integration */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Surface Water Quality */}
-      <section id="surface" className="section-padding bg-white">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div className="max-w-xl">
-              <span className="text-blue-500 font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Surveillance des Eaux</span>
-              <h2 className="text-5xl font-bold font-outfit text-gray-900 leading-tight">Qualité des eaux de surface</h2>
-            </div>
-            <p className="text-gray-500 max-w-xs text-sm leading-relaxed border-l-2 border-blue-100 pl-6 italic">
-              « État actuel des principaux points de captage et barrages du bassin. »
-            </p>
-          </div>
+      <section id="surface" className="section-padding bg-gray-50/50">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-16 items-start">
+            <div className="lg:w-1/3">
+              <span className="text-blue-600 font-bold uppercase tracking-[0.2em] text-[10px] mb-4 block">Indicateur de Performance</span>
+              <h2 className="text-3xl font-bold font-display text-gray-900 leading-tight mb-6 uppercase tracking-tight">État des eaux <br />de surface</h2>
+              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+                Analyse comparative de la qualité hydrique basée sur les relevés des 10 principales stations de surveillance du bassin du Loukkos.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-16">
-            {/* Category: Excellente */}
-            <div className="space-y-8 animate-fade-in">
-              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
-                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Excellente</h3>
+              <div className="space-y-6">
+                <div className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-xs text-gray-400 font-bold uppercase mb-1">Indice Global</p>
+                      <p className="text-2xl font-black text-gray-900 font-outfit">Positif</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] text-green-500 font-bold">+12% vs 2024</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-xs text-gray-400 font-bold uppercase mb-1">Stations Actives</p>
+                      <p className="text-2xl font-black text-gray-900 font-outfit">10/10</p>
+                    </div>
+                    <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+                      <i className="fas fa-satellite-dish text-sm"></i>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <ul className="space-y-5">
-                {['Smir', 'My Bouchta', 'El Hachef', 'Ibn Batouta', 'Tanger MED', 'Oued El Makhazine', 'de garde'].map((item) => (
-                  <li key={item} className="group flex items-center justify-between">
-                    <span className="text-gray-700 font-medium group-hover:text-blue-600 transition-colors">{item}</span>
-                    <i className="fas fa-check text-[10px] text-blue-500 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0"></i>
-                  </li>
-                ))}
-              </ul>
             </div>
 
-            {/* Category: Bonne */}
-            <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Bonne</h3>
+            <div className="lg:w-2/3 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {[
+                  {
+                    label: 'Excellente',
+                    value: 70,
+                    count: '07',
+                    bg: 'bg-blue-600',
+                    stations: 'Smir, My Bouchta, El Hachef, Ibn Batouta, Oued El Makhazine, Tanger MED'
+                  },
+                  {
+                    label: 'Bonne Qualité',
+                    value: 20,
+                    count: '02',
+                    bg: 'bg-gray-400',
+                    stations: 'Nakhla, My Hassan Ben Mehdi'
+                  },
+                  {
+                    label: 'Zone Critique',
+                    value: 10,
+                    count: '01',
+                    bg: 'bg-red-400',
+                    stations: 'A. Khattabi'
+                  }
+                ].map((item, idx) => (
+                  <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full group/card">
+                    <div>
+                      <div className="flex justify-between items-start mb-6">
+                        <div className={`px-2 py-0.5 rounded ${item.bg} text-white font-black text-[9px] uppercase`}>
+                          {item.value}%
+                        </div>
+                        <span className="text-xl font-black text-gray-900/10 font-cairo tracking-tighter group-hover/card:text-gray-900/20 transition-colors uppercase">{item.count}</span>
+                      </div>
+
+                      <h4 className={`text-[11px] font-black uppercase tracking-widest mb-3 ${idx === 2 ? 'text-red-500' : 'text-gray-400'}`}>
+                        {item.label}
+                      </h4>
+
+                      <p className="text-[11px] text-gray-400 leading-relaxed line-clamp-2 italic">
+                        {item.stations}
+                      </p>
+                    </div>
+
+                    <div className="mt-6">
+                      <div className="h-1 w-full bg-gray-50 rounded-full overflow-hidden">
+                        <div className={`h-full ${item.bg} rounded-full`} style={{ width: `${item.value}%` }}></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <ul className="space-y-5">
-                {['Nakhla', 'My Hassan Ben Mehdi'].map((item) => (
-                  <li key={item} className="group flex items-center justify-between">
-                    <span className="text-gray-700 font-medium group-hover:text-green-600 transition-colors">{item}</span>
-                    <i className="fas fa-check text-[10px] text-green-500 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0"></i>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Category: Mauvaise */}
-            <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
-                <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">Mauvaise</h3>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest">
+                <div className="flex items-center">
+                  <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span> Requis
+                </div>
+                <div className="flex items-center">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span> Satisfaisant
+                </div>
+                <div className="flex items-center">
+                  <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span> Risque
+                </div>
               </div>
-              <ul className="space-y-5">
-                {['A. Khattabi'].map((item) => (
-                  <li key={item} className="group flex items-center justify-between">
-                    <span className="text-gray-700 font-medium group-hover:text-red-500 transition-colors">{item}</span>
-                    <i className="fas fa-exclamation text-[10px] text-red-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all"></i>
-                  </li>
-                ))}
-              </ul>
             </div>
-          </div>
-
-          <div className="mt-24 pt-10 border-t border-gray-50 flex items-center justify-center space-x-8 text-xs font-bold text-gray-300 uppercase tracking-[0.3em]">
-            <span>Données Loukkos 2025</span>
-            <span className="w-1 h-1 bg-gray-200 rounded-full"></span>
-            <span>Rapport Qualité G4</span>
           </div>
         </div>
       </section>
@@ -284,7 +328,7 @@ export default function Home() {
       <section id="souterraines" className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-outfit title-gradient">Qualité des eaux souterraines</h2>
+            <h2 className="text-3xl font-bold font-display title-gradient uppercase tracking-tight">Qualité des eaux souterraines</h2>
             <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
               Les nappes phréatiques du bassin du Loukkos sont des réserves invisibles mais essentielles.
               Découvrez l'état de qualité des principales nappes de notre région.
@@ -331,9 +375,8 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-16 max-w-3xl mx-auto p-8 bg-blue-900 rounded-[32px] text-white text-center shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/water.png')] opacity-10"></div>
-            <p className="text-xl font-medium relative z-10 leading-relaxed">
+          <div className="mt-20 max-w-3xl mx-auto pt-10 border-t border-gray-100 text-center relative overflow-hidden">
+            <p className="text-xl font-medium text-gray-500 italic leading-relaxed">
               « La qualité des eaux souterraines reste globalement acceptable mais nécessite une protection continue pour les générations futures. »
             </p>
           </div>
@@ -507,7 +550,7 @@ export default function Home() {
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center space-x-3">
                   <i className="fas fa-users-cog text-blue-600"></i>
-                  <span>Réalisé par : Meryem Nassouh</span>
+                  <span>Réalisé par : Group Bassin loukkos</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <i className="fas fa-calendar-alt text-blue-600"></i>
